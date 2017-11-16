@@ -6,9 +6,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 import MechAms.model.Category;
-import MechAms.model.Table;
 
 public class CategoryDao {
 
@@ -60,21 +60,21 @@ public class CategoryDao {
 		return categories;		
 	}
 	private static final String INSERT_CATEGORY = "INSERT INTO category (category_name) VALUES (?)";
-	public int createCategory(Table new_table) throws SQLException {
+	public int createCategory(String new_table,List<String> attributes,int num_attr) throws SQLException {
 		
 		try {
 			Class.forName(DRIVER);
 			connection = DriverManager.getConnection(DB_URL,USERNAME,PASSWORD); 
 			statement = connection.prepareStatement(INSERT_CATEGORY);
-			statement.setString(1, new_table.getTable_name());
+			statement.setString(1, new_table);
 			statement.executeUpdate();
 			statement.close();
 			
-			String tempQuery = null;
-			for(int i=1;i<=new_table.getNum_att();i++) {
-				tempQuery = tempQuery + new_table.getAttributeName(i) + " VARCHAR(30) NOT NULL,";
+			String tempQuery = "";
+			for(int i=0;i<num_attr;i++) {
+				tempQuery = tempQuery + attributes.get(i) + " VARCHAR(30) NOT NULL,";
 			}
-			String query = "CREATE TABLE " + new_table.getTable_name() +" ( id INT NOT NULL AUTO_INCREMENT ," + tempQuery+ " PRIMARY KEY (`id`))";
+			String query = "CREATE TABLE " + new_table +" ( id INT NOT NULL AUTO_INCREMENT ," + tempQuery+ " PRIMARY KEY (`id`))";
 			statement = connection.prepareStatement(query);
 			statement.execute();
 			statement.close();
@@ -85,5 +85,25 @@ public class CategoryDao {
 		}
 		
 		return -1;
+	}
+	public String getName(int category_id) throws SQLException {
+		String table_name = "";
+		String query = "SELECT category_name FROM category WHERE category_id = "+Integer.toString(category_id);
+		
+		try {
+			Class.forName(DRIVER);
+			connection = DriverManager.getConnection(DB_URL,USERNAME,PASSWORD);
+			statement = connection.prepareStatement(query);
+			resultset = statement.executeQuery();
+			while(resultset.next()) {
+				table_name = resultset.getString("category_name");
+			}
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return table_name;
+		
 	}
 }

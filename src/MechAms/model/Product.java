@@ -194,6 +194,9 @@ public class Product {
 		this.attribute_name_9 = attribute_name_9;
 		this.attribute_value_9 = attribute_value_9;
 	}
+	public Product() {
+		// TODO Auto-generated constructor stub
+	}
 	public String getAttributeName(int i) {
 		switch(i) {
 		case 1: return getAttribute_name_1();
@@ -224,6 +227,36 @@ public class Product {
 		}
 		
 		return null;
+	}
+	public void setAttribute_name(String name, int index) {
+		switch(index)
+		{
+		case 1: setAttribute_name_1(name);return;
+		case 2: setAttribute_name_2(name);return;
+		case 3: setAttribute_name_3(name);return;
+		case 4: setAttribute_name_4(name);return;
+		case 5: setAttribute_name_5(name);return;
+		case 6: setAttribute_name_6(name);return;
+		case 7: setAttribute_name_7(name);return;
+		case 8: setAttribute_name_8(name);return;
+		case 9: setAttribute_name_9(name);return;		
+		}
+		
+	}
+	public void setAttribute_val(String val, int index) {
+		switch(index)
+		{
+		case 1: setAttribute_value_1(val);return;
+		case 2: setAttribute_value_2(val);return;
+		case 3: setAttribute_value_3(val);return;
+		case 4: setAttribute_value_4(val);return;
+		case 5: setAttribute_value_5(val);return;
+		case 6: setAttribute_value_6(val);return;
+		case 7: setAttribute_value_7(val);return;
+		case 8: setAttribute_value_8(val);return;
+		case 9: setAttribute_value_9(val);return;		
+		}
+		
 	}
 		
 }
